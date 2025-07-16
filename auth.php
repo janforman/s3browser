@@ -26,7 +26,7 @@ if (!function_exists('el_s3_getTemporaryLink')) {
                 $signpath = '/' . $bucket . '/' . $path;
                 $signsz = implode("\n", $pieces = array('GET', null, null, $expires, $signpath));
                 $signature = el_crypto_hmacSHA1($secretKey, $signsz);
-                $url = sprintf(S3ENDPOINT.'/%s/%s', $bucket, $path);
+                if (S3USEPATH) $url = sprintf(S3PROTOCOL.S3ENDPOINT.'/%s/%s', $bucket, $path); else $url = sprintf(S3PROTOCOL.'%s.'.S3ENDPOINT.'/%s', $bucket, $path);
                 $qs = http_build_query($pieces = array(
                         'AWSAccessKeyId' => $accessKey,
                         'Expires' => $expires,

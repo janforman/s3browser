@@ -26,7 +26,9 @@ define('TIMEOUT_CHECK_ACTIVITY', true);
 define('USE_AUTH', false);
 
 // Define S3 endpoint and token
+define('S3PROTOCOL', 'https://');
 define('S3ENDPOINT', '');
 define('S3BUCKET', '');
+define('S3USEPATH', true);
 define('ACCESSKEY', '');
 define('SECRETKEY', '');
