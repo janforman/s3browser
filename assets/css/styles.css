@@ -1,13 +1,13 @@
 @charset "utf-8";html{height:100%;background-color:#810f61;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25' viewBox='0 0 800 400'%3E%3Cdefs%3E%3CradialGradient id='a' cx='396' cy='281' r='514' gradientUnits='userSpaceOnUse'%3E%3Cstop offset='0' stop-color='%23fa2659'/%3E%3Cstop offset='1' stop-color='%233e0266'/%3E%3C/radialGradient%3E%3ClinearGradient id='b' gradientUnits='userSpaceOnUse' x1='400' y1='148' x2='400' y2='333'%3E%3Cstop offset='0' stop-color='%23780b7e' stop-opacity='0'/%3E%3Cstop offset='1' stop-color='%23780b7e' stop-opacity='0.5'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect fill='url(%23a)' width='800' height='400'/%3E%3Cg fill-opacity='0.4'%3E%3Ccircle fill='url(%23b)' cx='267.5' cy='61' r='300'/%3E%3Ccircle fill='url(%23b)' cx='532.5' cy='61' r='300'/%3E%3Ccircle fill='url(%23b)' cx='400' cy='30' r='300'/%3E%3C/g%3E%3C/svg%3E");background-attachment:fixed;background-size:cover;font:14px normal Arial,Helvetica,sans-serif;z-index:-4;}
 /*-------------------------File manager-------------------------*/
 img{image-rendering:-webkit-optimize-contrast;}
-.filemanager{width:95%;max-width:1240px;position:relative;margin:80px auto 0px;}
+.filemanager{width:95%;max-width:1220px;position:relative;margin:40px auto 0px;}
 @media all and (max-width:965px){.filemanager{margin:60px auto 0px;}
 }
 /*-------------------------Password-------------------------*/
 .password{margin-top:300px;color:#ffffff;width:500px; margin-left:auto; margin-right:auto; text-align:center;-webkit-animation:showSlowlyElement 1200ms; animation:showSlowlyElement 1200ms;}
 /*-------------------------Breadcrumps-------------------------*/
-.filemanager .breadcrumbs{color:#ffffff;margin-left:20px;font-size:24px;font-weight:700;line-height:35px;}
+.filemanager .breadcrumbs{color:#ffffff;margin:0px;font-size:24px;font-weight:700;line-height:35px;}
 .filemanager .breadcrumbs a:link,.breadcrumbs a:visited{color:#ffffff;text-decoration:none;}
 .filemanager .breadcrumbs a:hover{text-decoration:underline;}
 .filemanager .breadcrumbs .arrow{color:#6a6a72;font-size:24px;font-weight:700;line-height:20px;}
@@ -15,7 +15,7 @@ img{image-rendering:-webkit-optimize-contrast;}
 .filemanager .search{position:absolute;padding-right:30px;cursor:pointer;right:0;font-size:17px;color:#ffffff;display:block;width:40px;height:40px;}
 .filemanager .search:before{content:'';position:absolute;margin-top:12px;width:10px;height:11px;border-radius:50%;border:2px solid #ffffff;right:8px;}
 .filemanager .search:after{content:'';width:3px;height:10px;background-color:#ffffff;border-radius:2px;position:absolute;top:23px;right:6px;-webkit-transform:rotate(-45deg);transform:rotate(-45deg);}
-.filemanager .search input[type=search]{border-radius:2px;color:#4D535E;background-color:#FFF;width:250px;height:44px;margin-left:-215px;padding-left:20px;text-decoration-color:#4d535e;font-size:16px;font-weight:400;line-height:20px;display:none;outline:none;border:none;padding-right:10px;-webkit-appearance:none;}
+.filemanager .search input[type=search]{border-radius:2px;color:#4D535E;background-color:#FFF;width:200px;height:44px;margin-left:-165px;padding-left:20px;text-decoration-color:#4d535e;font-size:16px;font-weight:400;line-height:20px;display:none;outline:none;border:none;padding-right:10px;-webkit-appearance:none;}
 ::-webkit-input-placeholder{
 /* WebKit browsers */
 color:#4d535e;}
@@ -35,10 +35,10 @@ color:#4d535e;}
 animation:showSlowlyElement 700ms;
 /* Standard syntax */
 }
-.filemanager .data li{border-radius:4px;background-color:#373743;width:365px;height:111px;list-style-type:none;margin:6px;display:inline-block;position:relative;overflow:hidden;padding:0.3em;z-index:1;cursor:pointer;box-sizing:border-box;transition:0.3s background-color;}
+.filemanager .data li{border-radius:4px;background-color:#373743;width:365px;height:111px;list-style-type:none;margin:5px;display:inline-block;position:relative;overflow:hidden;padding:0.3em;z-index:1;cursor:pointer;box-sizing:border-box;transition:0.3s background-color;}
 .filemanager .data li:hover{background-color:#42424E;}
 .filemanager .data li a{position:absolute;top:0;left:0;width:100%;height:100%;}
-.filemanager .data li .name{color:#ffffff;font-size:15px;font-weight:700;line-height:20px;width:240px;white-space:nowrap;display:inline-block;position:absolute;overflow:hidden;text-overflow:ellipsis;top:40px;}
+.filemanager .data li .name{color:#ffffff;font-size:15px;font-weight:700;line-height:20px;width:220px;white-space:nowrap;display:inline-block;position:absolute;overflow:hidden;text-overflow:ellipsis;top:40px;}
 .filemanager .data li .details{color:#b6c1c9;font-size:13px;font-weight:400;width:55px;height:10px;top:64px;white-space:nowrap;position:absolute;display:inline-block;}
 .filemanager .nothingfound{background-color:#373743;width:23em;height:21em;margin:0 auto;display:none;font-family:Arial;-webkit-animation:showSlowlyElement 700ms;
 /* Chrome,Safari,Opera */
@@ -66,8 +66,8 @@ animation:showSlowlyElement 700ms;
 .icon.folder:after{content:'';float:left;clear:left;background-color:#c13186;width:3em;height:2.25em;border-radius:0.1em;}
 .icon.folder.full:before{height:0.55em;}
 .icon.folder.full:after{height:2.15em;box-shadow:0 -0.12em 0 0 #afafaf;}
-.icon.file{width:2.5em;height:3em;line-height:3em;text-align:center;border-radius:0.25em;color:#FFF;display:inline-block;margin:0.9em 1.2em 0.8em 1.3em;position:relative;overflow:hidden;box-shadow:1.74em -2.1em 0 0 #A4A7AC inset;}
-.icon.file:after{content:'';position:absolute;z-index:-1;border-width:0;border-bottom:2.6em solid #DADDE1;border-right:2.22em solid rgba(0,0,0,0);top:-34.5px;right:-4px;}
+.icon.file{width:3em;height:3.3em;line-height:4.4em;text-align:center;border-radius:0.4em;color:#FFF;display:inline-block;margin:0.6em 0.6em 0.6em 0.6em;position:relative;overflow:hidden;box-shadow:1.74em -2.1em 0 0 #A4A7AC inset;}
+.icon.file:after{content:'';position:absolute;z-index:-1;border-width:0;border-bottom:2.8em solid #DADDE1;border-right:2.9em solid rgba(0,0,0,0);top:-34.5px;right:-4px;}
 .icon.file.f-avi,.icon.file.f-webm,.icon.file.f-mkv,.icon.file.f-mov,.icon.file.f-mpeg,.icon.file.f-mpg,.icon.file.f-mp4,.icon.file.f-m4v,.icon.file.f-wmv{box-shadow:1.74em -2.1em 0 0 #7e70ee inset;}
 .icon.file.f-avi:after,.icon.file.f-webm:after,.icon.file.f-mkv:after,.icon.file.f-mov:after,.icon.file.f-mpeg:after,.icon.file.f-mpg:after,.icon.file.f-mp4:after,.icon.file.f-m4v:after,.icon.file.f-wmv:after{border-bottom-color:#5649c1;}
 .icon.file.f-mp2,.icon.file.f-mp3,.icon.file.f-m3u,.icon.file.f-wma,.icon.file.f-xls,.icon.file.f-xlsx{box-shadow:1.74em -2.1em 0 0 #5bab6e inset;}
