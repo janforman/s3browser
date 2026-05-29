@@ -1,41 +1,50 @@
 <?php
 require('config.php');
 
-// S3 generate secure link
-if (!function_exists('el_crypto_hmacSHA1')) {
-        function el_crypto_hmacSHA1($key, $data, $blocksize = 64)
-        {
-                if (strlen($key) > $blocksize) $key = pack('H*', sha1($key));
-                $key = str_pad($key, $blocksize, chr(0x00));
-                $ipad = str_repeat(chr(0x36), $blocksize);
-                $opad = str_repeat(chr(0x5c), $blocksize);
-                $hmac = pack('H*', sha1(
-                        ($key ^ $opad) . pack('H*', sha1(
-                                ($key ^ $ipad) . $data
-                        ))
-                ));
-                return base64_encode($hmac);
-        }
-}
+// S3 generate secure link v4
+function el_s3_getTemporaryLink($accessKey, $secretKey, $bucket, $path, $expires = TIMEOUT_MINUTES) {
+    $service = 's3';
+    $host = S3ENDPOINT;
+    $endpoint = S3PROTOCOL."$host";
+    $region = S3REGION;
+    $path = $bucket.'/'.$path;
 
-if (!function_exists('el_s3_getTemporaryLink')) {
-        function el_s3_getTemporaryLink($accessKey, $secretKey, $bucket, $path, $expires = TIMEOUT_MINUTES)
-        {
-                $expires = time() + intval(floatval($expires) * 60);
-                $path = str_replace('%2F', '/', rawurlencode($path = ltrim($path, '/')));
-                $signpath = '/' . $bucket . '/' . $path;
-                $signsz = implode("\n", $pieces = array('GET', null, null, $expires, $signpath));
-                $signature = el_crypto_hmacSHA1($secretKey, $signsz);
-                if (S3USEPATH) $url = sprintf(S3PROTOCOL.S3ENDPOINT.'/%s/%s', $bucket, $path); else $url = sprintf(S3PROTOCOL.'%s.'.S3ENDPOINT.'/%s', $bucket, $path);
-                $qs = http_build_query($pieces = array(
-                        'AWSAccessKeyId' => $accessKey,
-                        'Expires' => $expires,
-                        'Signature' => $signature,
-                ));
-                return $url . '?' . $qs;
-        }
+    $timestamp = time();
+    $amzDate = gmdate('Ymd\THis\Z', $timestamp);
+    $datestamp = gmdate('Ymd', $timestamp);
+    $region = S3REGION;
+
+    $queryParameters = [
+        'X-Amz-Algorithm'     => 'AWS4-HMAC-SHA256',
+        'X-Amz-Credential'    => "$accessKey/$datestamp/$region/$service/aws4_request",
+        'X-Amz-Date'          => $amzDate,
+        'X-Amz-Expires'       => $expires,
+        'X-Amz-SignedHeaders' => 'host',
+    ];
+    ksort($queryParameters);
+    $queryString = http_build_query($queryParameters, '', '&', PHP_QUERY_RFC3986);
+
+    $canonicalUri = '/' . ltrim($path, '/');
+    $canonicalHeaders = "host:$host\n";
+    $signedHeaders = "host";
+    $payloadHash = "UNSIGNED-PAYLOAD";
+
+    $canonicalRequest = "GET\n$canonicalUri\n$queryString\n$canonicalHeaders\n$signedHeaders\n$payloadHash";
+
+    $scope = "$datestamp/$region/$service/aws4_request";
+    $stringToSign = "AWS4-HMAC-SHA256\n$amzDate\n$scope\n" . hash('sha256', $canonicalRequest);
+
+    $kSecret = "AWS4" . $secretKey;
+    $kDate    = hash_hmac('sha256', $datestamp, $kSecret, true);
+    $kRegion  = hash_hmac('sha256', $region, $kDate, true);
+    $kService = hash_hmac('sha256', $service, $kRegion, true);
+    $kSigning = hash_hmac('sha256', 'aws4_request', $kService, true);
+
+    $signature = hash_hmac('sha256', $stringToSign, $kSigning);
+
+    return "$endpoint$canonicalUri?$queryString&X-Amz-Signature=$signature";
 }
-// S3 generate secure link
+// S3 generate secure link v4
 
 if (USE_AUTH == false) return;
 

@@ -3,7 +3,7 @@ require('auth.php');
 header('Expires: 0');
 header('Content-type: application/json');
 
-$xml = file_get_contents(el_s3_getTemporaryLink(ACCESSKEY, SECRETKEY, S3BUCKET, '/'), false);
+$xml = file_get_contents(el_s3_getTemporaryLink(ACCESSKEY, SECRETKEY, S3BUCKET, ''), false);
 $xml = simplexml_load_string($xml);
 
 $files = array();
@@ -82,5 +82,5 @@ $output = array(
     "items" => $tree
 );
 
-echo json_encode($output);
+echo json_encode($output, JSON_PRETTY_PRINT);
 ?>
