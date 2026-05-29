@@ -18,7 +18,7 @@ function el_s3_getTemporaryLink($accessKey, $secretKey, $bucket, $path, $expires
         'X-Amz-Algorithm'     => 'AWS4-HMAC-SHA256',
         'X-Amz-Credential'    => "$accessKey/$datestamp/$region/$service/aws4_request",
         'X-Amz-Date'          => $amzDate,
-        'X-Amz-Expires'       => $expires,
+        'X-Amz-Expires'       => $expires * 60,
         'X-Amz-SignedHeaders' => 'host',
     ];
     ksort($queryParameters);
