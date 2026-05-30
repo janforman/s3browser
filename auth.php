@@ -3,20 +3,18 @@ require('config.php');
 
 // S3 generate secure link v4
 function el_s3_getTemporaryLink($accessKey, $secretKey, $bucket, $path, $expires = TIMEOUT_MINUTES) {
-    $service = 's3';
     $host = S3ENDPOINT;
-    $endpoint = S3PROTOCOL."$host";
+    $endpoint = S3PROTOCOL . "$host";
     $region = S3REGION;
-    $path = $bucket.'/'.$path;
+    $path = $bucket . '/' . $path;
 
     $timestamp = time();
     $amzDate = gmdate('Ymd\THis\Z', $timestamp);
     $datestamp = gmdate('Ymd', $timestamp);
-    $region = S3REGION;
 
     $queryParameters = [
         'X-Amz-Algorithm'     => 'AWS4-HMAC-SHA256',
-        'X-Amz-Credential'    => "$accessKey/$datestamp/$region/$service/aws4_request",
+        'X-Amz-Credential'    => "$accessKey/$datestamp/$region/s3/aws4_request",
         'X-Amz-Date'          => $amzDate,
         'X-Amz-Expires'       => $expires * 60,
         'X-Amz-SignedHeaders' => 'host',
