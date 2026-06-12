@@ -7,6 +7,11 @@ function el_s3_getTemporaryLink($accessKey, $secretKey, $bucket, $path, $expires
     $endpoint = S3PROTOCOL . "$host";
     $region = S3REGION;
     $service = 's3';
+
+    $pathSegments = explode('/', ltrim($path, '/'));
+    $encodedSegments = array_map('rawurlencode', $pathSegments);
+    $path = implode('/', $encodedSegments);
+    
     $path = $bucket . '/' . $path;
 
     $timestamp = time();
